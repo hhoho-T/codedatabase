@@ -1,0 +1,66 @@
+create database quanlykhodtmt;
+use quanlykhodtmt;
+-- Tạo bảng Sản phẩm (Product)
+CREATE TABLE Product (
+    ProductID INT PRIMARY KEY,
+    Name NVARCHAR(255),
+    Description NVARCHAR(MAX),
+    Price DECIMAL(18, 2),
+    Quantity INT,
+    Location NVARCHAR(100)
+);
+
+-- Tạo bảng Đơn hàng (Order)
+CREATE TABLE [Order] (
+    OrderID INT PRIMARY KEY,
+    OrderDate DATE,
+    EmployeeID INT FOREIGN KEY REFERENCES Employee(EmployeeID),
+    TotalAmount DECIMAL(18, 2),
+    Status NVARCHAR(50)
+);
+
+-- Tạo bảng Chi tiết đơn hàng (OrderDetail)
+CREATE TABLE OrderDetail (
+    OrderDetailID INT PRIMARY KEY,
+    OrderID INT FOREIGN KEY REFERENCES [Order](OrderID),
+    ProductID INT FOREIGN KEY REFERENCES Product(ProductID),
+    Quantity INT,
+    UnitPrice DECIMAL(18, 2)
+);
+
+-- Tạo bảng Nhân viên (Employee)
+CREATE TABLE Employee (
+    EmployeeID INT PRIMARY KEY,
+    Name NVARCHAR(100),
+    Address NVARCHAR(255),
+    Phone NVARCHAR(20),
+    Email NVARCHAR(100),
+    Position NVARCHAR(100)
+);
+
+INSERT INTO Product (ProductID, Name, Description, Price, Quantity, Location)
+VALUES
+    (1, 'iPhone 13', 'Latest iPhone model', 999.99, 10, 'Shelf A'),
+    (2, 'Samsung Galaxy S21', 'Flagship Samsung phone', 899.99, 15, 'Shelf B'),
+    (3, 'Dell XPS 15', 'High-performance laptop', 1499.99, 5, 'Warehouse');
+    -- Thêm dữ liệu khác tùy thuộc vào nhu cầu của bạn
+    
+	INSERT INTO Employee (EmployeeID, Name, Address, Phone, Email, Position)
+VALUES
+    (1, 'John Doe', '123 Main St, City, Country', '123-456-7890', 'john@example.com', 'Sales Representative'),
+    (2, 'Jane Smith', '456 Elm St, City, Country', '987-654-3210', 'jane@example.com', 'Store Manager');
+    -- Thêm dữ liệu khác tùy thuộc vào nhu cầu của bạn
+    
+	INSERT INTO [Order] (OrderID, OrderDate, EmployeeID, TotalAmount, Status)
+VALUES
+    (1, '2024-03-18', 1, 1999.98, 'Processing'),
+    (2, '2024-03-19', 2, 1599.99, 'Shipped');
+    -- Thêm dữ liệu khác tùy thuộc vào nhu cầu của bạn
+    
+	INSERT INTO OrderDetail (OrderDetailID, OrderID, ProductID, Quantity, UnitPrice)
+VALUES
+    (1, 1, 1, 2, 999.99),
+    (2, 1, 3, 1, 1499.99),
+    (3, 2, 2, 3, 899.99);
+    -- Thêm dữ liệu khác tùy thuộc vào nhu cầu của bạn
+    
